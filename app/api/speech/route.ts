@@ -15,7 +15,9 @@ export async function POST(req:Request){
   const appId=process.env.IFLYTEK_APP_ID,key=process.env.IFLYTEK_API_KEY,secret=process.env.IFLYTEK_API_SECRET;
   if(!appId||!key||!secret)return Response.json({error:"iFlytek env is not configured"},{status:500});
   if(typeof text!=="string"||!text.trim())return Response.json({error:"text is required"},{status:400});
-  const ws=new WebSocket(authUrl("wss://tts-api-sg.xf-yun.com/v2/tts",key,secret));
+  const endpoint="wss://tts-api-sg.xf-yun.com/v2/tts";
+  console.log("iFlytek TTS connecting",{host:new URL(endpoint).host});
+  const ws=new WebSocket(authUrl(endpoint,key,secret),{handshakeTimeout:10000});
   const chunks:Buffer[]=[];
   const audio=await new Promise<Buffer>((resolve,reject)=>{
    const timer=setTimeout(()=>{ws.close();reject(new Error("TTS timeout"))},20000);
@@ -26,7 +28,7 @@ export async function POST(req:Request){
     }catch(e){clearTimeout(timer);ws.close();reject(e)}
    });
    ws.on("unexpected-response",(_req,res)=>{clearTimeout(timer);ws.close();reject(new Error(`iFlytek TTS handshake failed: HTTP ${res.statusCode}`))});
-   ws.on("error",e=>{clearTimeout(timer);console.error("iFlytek TTS websocket error",e.message);reject(e)});
+   ws.on("error",e=>{clearTimeout(timer);console.error("iFlytek TTS websocket error",{message:e.message,code:(e as NodeJS.ErrnoException).code,name:e.name});reject(e)});
    ws.on("open",()=>ws.send(JSON.stringify({common:{app_id:appId},business:{aue:"raw",auf:"audio/L16;rate=16000",vcn:"x_xiaoyan",tte:"UTF8",speed:50,volume:50,pitch:50,bgs:0},data:{status:2,text:Buffer.from(text).toString("base64")}})));
   });
   const wav=Buffer.alloc(44+audio.length);audio.copy(wav,44);
