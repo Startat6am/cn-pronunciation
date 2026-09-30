@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import WebSocket from "ws";
+import WebSocket from "ws";\nexport const runtime = "nodejs";
 
 function authUrl(hostUrl:string,key:string,secret:string){
  const u=new URL(hostUrl),date=new Date().toUTCString();
@@ -19,12 +19,12 @@ export async function POST(req:Request){
   const audio=await new Promise<Buffer>((resolve,reject)=>{
    const timer=setTimeout(()=>{ws.close();reject(new Error("TTS timeout"))},20000);
    ws.on("message",(raw)=>{
-    try{const j=JSON.parse(raw.toString()); if(j.code){clearTimeout(timer);ws.close();reject(new Error(j.message||String(j.code)));return}
+    try{const j=JSON.parse(raw.toString()); if(j.code){clearTimeout(timer);ws.close();console.error("iFlytek TTS error",{code:j.code,message:j.message,sid:j.sid});reject(new Error(j.message||`iFlytek TTS error ${j.code}`));return}
       if(j.data?.audio)chunks.push(Buffer.from(j.data.audio,"base64"));
       if(j.data?.status===2){clearTimeout(timer);ws.close();resolve(Buffer.concat(chunks));}
     }catch(e){clearTimeout(timer);ws.close();reject(e)}
    });
-   ws.on("error",e=>{clearTimeout(timer);reject(e)});
+   ws.on("unexpected-response",(_req,res)=>{clearTimeout(timer);ws.close();reject(new Error(`iFlytek TTS handshake failed: HTTP ${res.statusCode}`))});\n   ws.on("error",e=>{clearTimeout(timer);console.error("iFlytek TTS websocket error",e.message);reject(e)});
    ws.on("open",()=>ws.send(JSON.stringify({common:{app_id:appId},business:{aue:"raw",auf:"audio/L16;rate=16000",vcn:"x4_xiaoyan",tte:"UTF8",speed:50,volume:50,pitch:50,bgs:0},data:{status:2,text:Buffer.from(text).toString("base64")}})));
   });
   const wav=Buffer.alloc(44+audio.length);audio.copy(wav,44);
