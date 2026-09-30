@@ -6,7 +6,7 @@ function authUrl(hostUrl:string,key:string,secret:string){
  const u=new URL(hostUrl),date=new Date().toUTCString();
  const origin=`host: ${u.host}\ndate: ${date}\nGET ${u.pathname} HTTP/1.1`;
  const signature=crypto.createHmac("sha256",secret).update(origin).digest("base64");
- const authorization=Buffer.from(`api_key="${key}", algorithm="hmac-sha256", headers="host date request-line", signature="${signature}"`).toString("base64");
+ const authorization=Buffer.from(`api_key="${key}",algorithm="hmac-sha256",headers="host date request-line",signature="${signature}"`).toString("base64");
  return `${hostUrl}?authorization=${encodeURIComponent(authorization)}&date=${encodeURIComponent(date)}&host=${encodeURIComponent(u.host)}`;
 }
 export async function POST(req:Request){
