@@ -22,7 +22,7 @@ export async function POST(req:Request){
   const raw=result.raw;const total=Number(raw.match(/(?:total_score|overall_score)[^0-9]*(\d+(?:\.\d+)?)/i)?.[1]||0);
   const phone=Number(raw.match(/phone_score[^0-9]*(\d+(?:\.\d+)?)/i)?.[1]||0);
   const tone=Number(raw.match(/tone_score[^0-9]*(\d+(?:\.\d+)?)/i)?.[1]||0);
-  const syllables=[...raw.matchAll(/(?:char|content|word)[^]{0,180}?(?:score|total_score)[^0-9]*(\d+(?:\.\d+)?)/gi)].slice(0,20).map(m=>Number(m[1]));
+  const syllables=[...raw.matchAll(/syll_score[^0-9]*(\d+(?:\.\d+)?)/gi)].slice(0,20).map(m=>Number(m[1]));
   return Response.json({score:total,phoneScore:phone,toneScore:tone,syllables,raw:process.env.NODE_ENV==="development"?raw:undefined});
  }catch(e){return Response.json({error:e instanceof Error?e.message:"Assessment failed"},{status:502})}
 }
