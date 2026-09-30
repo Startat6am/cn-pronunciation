@@ -25,7 +25,7 @@ export async function POST(req:Request){
     }catch(e){clearTimeout(timer);ws.close();reject(e)}
    });
    ws.on("error",e=>{clearTimeout(timer);reject(e)});
-   ws.on("open",()=>ws.send(JSON.stringify({common:{app_id:appId},business:{aue:"raw",auf:"audio/L16;rate=16000",vcn:"xiaoyan",tte:"UTF8",speed:50,volume:50,pitch:50,bgs:0},data:{status:2,text:Buffer.from(text).toString("base64")}})));
+   ws.on("open",()=>ws.send(JSON.stringify({common:{app_id:appId},business:{aue:"raw",auf:"audio/L16;rate=16000",vcn:"x4_xiaoyan",tte:"UTF8",speed:50,volume:50,pitch:50,bgs:0},data:{status:2,text:Buffer.from(text).toString("base64")}})));
   });
   const wav=Buffer.alloc(44+audio.length);audio.copy(wav,44);
   wav.write("RIFF",0);wav.writeUInt32LE(36+audio.length,4);wav.write("WAVE",8);wav.write("fmt ",12);wav.writeUInt32LE(16,16);wav.writeUInt16LE(1,20);wav.writeUInt16LE(1,22);wav.writeUInt32LE(16000,24);wav.writeUInt32LE(32000,28);wav.writeUInt16LE(2,32);wav.writeUInt16LE(16,34);wav.write("data",36);wav.writeUInt32LE(audio.length,40);
