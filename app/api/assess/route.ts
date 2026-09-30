@@ -15,7 +15,7 @@ export async function POST(req:Request){
    ws.on("message",raw=>{try{const j=JSON.parse(raw.toString());if(j.code){clearTimeout(timer);ws.close();reject(new Error(j.message||String(j.code)));return}if(j.data?.data)parts.push(Buffer.from(j.data.data,"base64").toString());if(j.data?.status===2){clearTimeout(timer);ws.close();resolve({raw:parts.join("")});}}catch(e){clearTimeout(timer);ws.close();reject(e)}});
    ws.on("error",e=>{clearTimeout(timer);reject(e)});
    ws.on("open",()=>{
-    ws.send(JSON.stringify({common:{app_id:appId},business:{sub:"ise",ent:"cn_vip",category:text.length===1?"read_syllable":"read_word",cmd:"ssb",auf:"audio/L16;rate=16000",aue:"raw",plev:0,result_level:"complete",text:Buffer.from(text).toString("base64")},data:{status:0,data:""}}));
+    ws.send(JSON.stringify({common:{app_id:appId},business:{sub:"ise",ent:"cn_vip",category:text.length===1?"read_syllable":"read_word",cmd:"ssb",auf:"audio/L16;rate=16000",aue:"raw",plev:0,result_level:"complete",rst:"entirety",ise_unite:"1",extra_ability:"multi_dimension",text:Buffer.from(text).toString("base64")},data:{status:0,data:""}}));
     const size=1280;for(let i=0;i<pcm.length;i+=size)ws.send(JSON.stringify({data:{status:i+size>=pcm.length?2:1,data:pcm.subarray(i,i+size).toString("base64")}}));
    });
   });
