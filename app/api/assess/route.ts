@@ -1,5 +1,6 @@
 import crypto from "crypto";
 import WebSocket from "ws";
+import { XMLParser } from "fast-xml-parser";
 
 export const runtime = "nodejs";
 
@@ -81,24 +82,49 @@ export async function POST(req: Request) {
       });
     });
 
-    let parsed: any;
-    try { parsed = JSON.parse(raw); } catch { parsed = null; }
-    const findScore = (obj: any, keys: string[]): number => {
-      if (!obj || typeof obj !== "object") return 0;
-      for (const key of keys) if (obj[key] !== undefined && Number.isFinite(Number(obj[key]))) return Number(obj[key]);
-      for (const value of Object.values(obj)) { const found = findScore(value, keys); if (found) return found; }
-      return 0;
+    const parsed = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "" }).parse(raw);
+    const findValue = (obj: any, keys: string[]): number | null => {
+      if (!obj || typeof obj !== "object") return null;
+      for (const key of keys) {
+        if (obj[key] !== undefined) {
+          const node = obj[key];
+          const value = node && typeof node === "object" && node.value !== undefined ? node.value : node;
+          const n = Number(value);
+          if (Number.isFinite(n)) return n;
+        }
+      }
+      for (const value of Object.values(obj)) {
+        const found = findValue(value, keys);
+        if (found !== null) return found;
+      }
+      return null;
     };
-    const score = findScore(parsed, ["total_score", "overall_score", "pronunciation_score"]);
-    const phoneScore = findScore(parsed, ["phone_score"]);
-    const toneScore = findScore(parsed, ["tone_score"]);
-    const syllables: number[] = [];
-    const walk = (obj: any) => {
+    const score = findValue(parsed, ["total_score"]);
+    const phoneScore = findValue(parsed, ["phone_score"]);
+    const toneScore = findValue(parsed, ["tone_score"]);
+    const syllables: Array<{ content: string; dp_message: number | null }> = [];
+    const collectSyllables = (obj: any) => {
       if (!obj || typeof obj !== "object") return;
-      if (obj.syll_score !== undefined && Number.isFinite(Number(obj.syll_score))) syllables.push(Number(obj.syll_score));
-      for (const v of Object.values(obj)) walk(v);
+      if (obj.syll !== undefined) {
+        const nodes = Array.isArray(obj.syll) ? obj.syll : [obj.syll];
+        for (const node of nodes) {
+          if (node && typeof node === "object") {
+            const dp = Number(node.dp_message);
+            syllables.push({
+              content: String(node.content ?? ""),
+              dp_message: Number.isFinite(dp) ? dp : null
+            });
+          }
+        }
+      }
+      for (const value of Object.values(obj)) {
+        if (value && typeof value === "object") collectSyllables(value);
+      }
     };
-    walk(parsed);
+    collectSyllables(parsed);
+    if (score === null) {
+      return Response.json({ error: "iFlytek вернул результат без total_score", details: process.env.NODE_ENV === "development" ? raw : undefined }, { status: 502 });
+    }
     return Response.json({ score, phoneScore, toneScore, syllables, raw: process.env.NODE_ENV === "development" ? raw : undefined });
   } catch (e) {
     return Response.json({ error: e instanceof Error ? e.message : "Assessment failed" }, { status: 502 });
