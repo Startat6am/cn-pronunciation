@@ -27,7 +27,7 @@ export async function POST(req: Request) {
   try {
     const form = await req.formData();
     const audio = form.get("audio");
-    const appId = process.env.IFLYTEK_APP_ID, key = process.env.IFLYTEK_API_KEY, secret = process.env.IFLYTEK_API_SECRET;
+    const appId = process.env.IFLYTEK_APP_ID, key = process.env.IFLYTEK_IAT_API_KEY || process.env.IFLYTEK_API_KEY, secret = process.env.IFLYTEK_IAT_API_SECRET || process.env.IFLYTEK_API_SECRET;
     if (!appId || !key || !secret) return Response.json({ error: "iFlytek env is not configured" }, { status: 500 });
     if (!(audio instanceof File)) return Response.json({ error: "audio is required" }, { status: 400 });
     const pcm = pcmFromWav(Buffer.from(await audio.arrayBuffer()));
