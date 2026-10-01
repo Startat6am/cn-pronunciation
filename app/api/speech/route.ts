@@ -11,7 +11,9 @@ function authUrl(hostUrl:string,key:string,secret:string){
 }
 export async function POST(req:Request){
  try{
-  const {text}=await req.json();
+  const {text,voice:requestedVoice}=await req.json();
+  const allowedVoices=new Set(["x_xiaoyan","x_xiaolin","x_xiaoyuan","x_xiaoxi","x_xiaomei","x_xiaofeng","x_xiaoxue","x_yifeng","x_john_ce","x_catherine_ce","x_steve_ce"]);
+  const voice=typeof requestedVoice==="string"&&allowedVoices.has(requestedVoice)?requestedVoice:"x_xiaoyan";
   const appId=process.env.IFLYTEK_APP_ID,key=process.env.IFLYTEK_API_KEY,secret=process.env.IFLYTEK_API_SECRET;
   if(!appId||!key||!secret)return Response.json({error:"iFlytek env is not configured"},{status:500});
   if(typeof text!=="string"||!text.trim())return Response.json({error:"text is required"},{status:400});
@@ -29,7 +31,7 @@ export async function POST(req:Request){
    });
    ws.on("unexpected-response",(_req,res)=>{clearTimeout(timer);ws.close();reject(new Error(`iFlytek TTS handshake failed: HTTP ${res.statusCode}`))});
    ws.on("error",e=>{clearTimeout(timer);console.error("iFlytek TTS websocket error",{message:e.message,code:(e as NodeJS.ErrnoException).code,name:e.name});reject(e)});
-   ws.on("open",()=>ws.send(JSON.stringify({common:{app_id:appId},business:{aue:"raw",auf:"audio/L16;rate=16000",vcn:"x_xiaoyan",tte:"UTF8",speed:50,volume:50,pitch:50,bgs:0},data:{status:2,text:Buffer.from(text).toString("base64")}})));
+   ws.on("open",()=>ws.send(JSON.stringify({common:{app_id:appId},business:{aue:"raw",auf:"audio/L16;rate=16000",vcn:voice,tte:"UTF8",speed:50,volume:50,pitch:50,bgs:0},data:{status:2,text:Buffer.from(text).toString("base64")}})));
   });
   const wav=Buffer.alloc(44+audio.length);audio.copy(wav,44);
   wav.write("RIFF",0);wav.writeUInt32LE(36+audio.length,4);wav.write("WAVE",8);wav.write("fmt ",12);wav.writeUInt32LE(16,16);wav.writeUInt16LE(1,20);wav.writeUInt16LE(1,22);wav.writeUInt32LE(16000,24);wav.writeUInt32LE(32000,28);wav.writeUInt16LE(2,32);wav.writeUInt16LE(16,34);wav.write("data",36);wav.writeUInt32LE(audio.length,40);
