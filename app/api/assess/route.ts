@@ -64,7 +64,7 @@ export async function POST(req: Request) {
           common: { app_id: appId },
           business: {
             sub: "ise", ent: "cn_vip", category: Array.from(text).length === 1 ? "read_syllable" : "read_word",
-            cmd: "ssb", auf: "audio/L16;rate=16000", aue: "raw", plev: 0,
+            cmd: "ssb", auf: "audio/L16;rate=16000", aue: "raw", plev: "0",
             tte: "utf-8", ttp_skip: true,
             result_level: "complete", rstcd: "utf8", rst: "entirety",
             ise_unite: "1", extra_ability: "multi_dimension", text: "\uFEFF" + text
