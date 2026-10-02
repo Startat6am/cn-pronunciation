@@ -86,3 +86,79 @@ footer.muted{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);f
 .progress-connected-dot{width:9px;height:9px;border-radius:50%;background:#58cc02;box-shadow:0 0 0 4px #58cc021c;flex:0 0 auto;margin-top:4px}
 .progress-connect-details>.btn{margin-top:13px}
 @media(max-width:760px){.progress-connect-summary{grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding:14px}.progress-connect-heading{grid-column:1/-1}.progress-connect-glance{text-align:left}.progress-connect-toggle{justify-self:end}.progress-connect-details{padding:0 14px 14px;align-items:flex-start;flex-wrap:wrap}.progress-connected-message{flex-basis:100%}.progress-connect-details>.btn{margin-top:0}.progress-connect-details .progress-connect-controls{max-width:none}.progress-connect-details .progress-connect-controls .btn{white-space:nowrap}}
+
+/* Focused practice layout and personal progress dashboard */
+.eyebrow{display:block;font-size:10px;letter-spacing:.13em;font-weight:800;color:#7e8873}
+.practice-card{padding:clamp(20px,3vw,32px)}
+.practice-kicker{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.word-counter{font-size:13px;font-weight:800;color:#4a6d31;font-variant-numeric:tabular-nums}
+.word-counter span{color:#a0a397;font-weight:500}
+.practice-progress{height:4px;background:#eef0e8;border-radius:99px;overflow:hidden;margin-top:13px}
+.practice-progress i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .25s ease}
+.practice-card .hanzi{margin-top:clamp(26px,5vw,46px);font-size:clamp(86px,12vw,120px);line-height:1.12}
+.practice-card .pinyin{margin-top:8px;font-size:27px}
+.practice-card .translation{font-size:15px;margin-top:9px}
+.practice-controls{margin-top:26px;gap:9px}
+.practice-controls .btn{padding:12px 15px}
+.record-btn{background:#f8faf5;border-color:#dfe8d5}
+.record-btn:not(.danger){color:#3e7025}
+.btn.danger{background:#fff0ec;border-color:#f2c8bc;color:#a53c2c}
+.practice-nav{justify-content:space-between;gap:10px;margin-top:26px}
+.practice-nav .btn{flex:1}
+.result-card{position:sticky;top:16px;min-height:340px;padding:23px;background:linear-gradient(155deg,#f3f9ed 0%,#fbfcf8 100%);border-color:#e1ebd7}
+.result-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.result-heading h2{font-size:21px;letter-spacing:-.035em;margin:5px 0 0}
+.result-spark{width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:#e5f5d8;color:#3b761b;font-size:21px}
+.empty-result{display:flex;align-items:center;flex-direction:column;text-align:center;padding:31px 7px 12px}
+.empty-result-icon{display:grid;place-items:center;width:72px;height:72px;border-radius:24px;background:#e7f4dc;color:#477b2c;font-family:"Noto Sans SC",sans-serif;font-size:33px;margin-bottom:18px}
+.empty-result>b{font-size:16px;letter-spacing:-.02em}
+.empty-result p{font-size:13px;line-height:1.65;color:#73796b;max-width:260px;margin:9px 0 18px}
+.result-hint{font-size:11px;color:#688453;border:1px solid #dce9d2;border-radius:999px;padding:8px 12px;background:#ffffff9c}
+.result-card .score{margin:23px 0 20px;font-size:64px;color:#377c1b}
+.result-card>div:not(.result-heading):not(.score){font-size:13px}
+.result-card .bar{margin:8px 0 17px}
+.syllable-title{font-size:15px;letter-spacing:-.02em;margin:24px 0 6px}
+.progress-dashboard{padding:clamp(18px,3vw,30px)}
+.dashboard-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:24px}
+.dashboard-heading h2{font-size:clamp(24px,4vw,32px);letter-spacing:-.05em;margin:8px 0}
+.dashboard-heading p{margin:0;max-width:510px;line-height:1.6}
+.dashboard-heading>.btn{flex:0 0 auto}
+.stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat-card{min-width:0;display:flex;flex-direction:column;gap:11px;padding:18px;border:1px solid #e9eae2;border-radius:16px;background:#fff}
+.stat-card>span{font-size:12px;line-height:1.4;color:#73796c;min-height:32px}
+.stat-card>strong{font-size:clamp(27px,4vw,36px);line-height:1;letter-spacing:-.06em;font-variant-numeric:tabular-nums}
+.stat-card>strong small{font-size:13px;letter-spacing:0;font-weight:600;color:#8b9084}
+.stat-card>small{font-size:11px;line-height:1.5;color:#858a7e}
+.stat-featured{background:#f1f8e9;border-color:#dfebd4}
+.stat-featured>strong{color:#39761e}
+.stat-track{height:6px;background:#dfe9d5;border-radius:99px;overflow:hidden}
+.stat-track i{display:block;height:100%;background:#58cc02;border-radius:99px}
+.review-section{margin-top:28px;padding-top:23px;border-top:1px solid #eceee6}
+.review-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.review-title h3{font-size:18px;letter-spacing:-.035em;margin:0 0 5px}
+.review-title p{margin:0;line-height:1.5}
+.review-count{display:grid;place-items:center;min-width:34px;height:34px;border-radius:11px;background:#f2f1eb;color:#606657;font-weight:800;font-size:13px}
+.review-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.review-word{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 14px;text-align:left;border:1px solid #e9eae2;background:#fff;border-radius:14px;color:inherit;cursor:pointer;transition:border-color .15s,transform .15s}
+.review-word:hover{border-color:#b8dca0;transform:translateY(-1px)}
+.review-hanzi{font-family:"Noto Sans SC","PingFang SC",sans-serif;font-size:27px;color:#3e7123;min-width:36px}
+.review-word-copy{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.review-word-copy b{font-size:13px}
+.review-word-copy small{font-size:11px;color:#82877b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.review-score{font-size:13px;font-weight:800;color:#a06a27;font-variant-numeric:tabular-nums}
+.review-arrow{color:#8b9381}
+.all-good{display:flex;align-items:center;gap:15px;padding:18px;border:1px dashed #dbe6d2;border-radius:15px;background:#fafcf7}
+.all-good>span{font-size:25px;color:#5c9c37}
+.all-good>div{flex:1}
+.all-good b{font-size:14px}
+.all-good p{margin:5px 0 0;color:#7b8175;font-size:12px;line-height:1.55}
+.cloud-note{display:flex;align-items:center;gap:13px;margin-top:23px;padding:15px 16px;border-radius:15px;background:#f5f5f0;border:1px solid #ebece5}
+.cloud-note>span{font-size:22px;color:#78836c}
+.cloud-note>div{flex:1;min-width:0}
+.cloud-note b{font-size:12px}
+.cloud-note p{font-size:11px;color:#7a8074;line-height:1.5;margin:4px 0 0}
+.cloud-note .btn{font-size:12px;padding:9px 12px}
+.diagnostics-card{padding:15px 18px;border-radius:15px;box-shadow:none}
+.diagnostics-card>.btn{margin-top:10px}
+@media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.result-card{position:static}}
+@media(max-width:620px){.dashboard-heading{align-items:flex-start;flex-direction:column}.dashboard-heading>.btn{width:100%}.stat-grid{gap:8px}.stat-card{padding:14px;gap:9px}.stat-card>span{min-height:28px;font-size:11px}.stat-card>strong{font-size:29px}.review-list{grid-template-columns:1fr}.cloud-note{align-items:flex-start;flex-wrap:wrap}.cloud-note>div{flex-basis:calc(100% - 44px)}.cloud-note>.btn{margin-left:35px}.practice-card .hanzi{margin-top:30px}.practice-controls .voice-select{flex-basis:100%;max-width:none}.practice-controls .btn{flex:1}.practice-nav .btn{font-size:12px;padding:10px 8px}.result-card{min-height:0}}
