@@ -64,3 +64,25 @@ footer.muted{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);f
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 .progress-connect{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 18px;margin:0 0 18px;background:#fff;border:1px solid var(--line);border-radius:16px}.progress-connect-copy{display:flex;flex-direction:column;gap:5px;min-width:0}.progress-connect-copy b{font-size:13px}.progress-connect-copy span{font-size:12px;color:var(--muted);line-height:1.5}.progress-connect-controls{display:flex;align-items:center;gap:8px;flex:0 1 430px}.progress-connect-controls input{width:100%;min-width:0;border:1px solid #e2e4da;border-radius:10px;padding:10px 12px;font-size:12px;background:#fff}@media(max-width:760px){.progress-connect{align-items:stretch;flex-direction:column;gap:12px;padding:14px}.progress-connect-controls{flex-basis:auto}.progress-connect-controls .btn{white-space:nowrap}}
+
+
+/* Collapsible personal progress connection */
+.progress-connect{display:block;padding:0;overflow:hidden}
+.progress-connect-summary{width:100%;display:grid;grid-template-columns:minmax(160px,1fr) minmax(150px,auto) auto;align-items:center;gap:16px;padding:15px 18px;text-align:left;border:0;background:transparent;color:inherit;cursor:pointer}
+.progress-connect-heading{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-width:0}
+.progress-connect-heading>b{font-size:13px}
+.progress-state{font-size:11px;color:#777b70;background:#f1f0ea;border:1px solid #e7e5dc;border-radius:999px;padding:5px 8px;white-space:nowrap}
+.progress-state.is-connected{color:#2f6e12;background:#edf8e5;border-color:#dceecf}
+.progress-connect-glance{font-size:12px;color:var(--muted);text-align:right}
+.progress-connect-toggle{font-size:12px;font-weight:700;color:#47752d;white-space:nowrap}
+.progress-connect-details{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:0 18px 16px;border-top:1px solid #f0efe8}
+.progress-help{font-size:12px;line-height:1.5;color:var(--muted);margin:13px 0 0;max-width:470px}
+.progress-connect-details .progress-connect-controls{margin-top:13px;flex:1 1 100%;max-width:540px}
+.progress-connect-feedback{font-size:12px;color:var(--muted);margin-top:12px;overflow-wrap:anywhere}
+.progress-connected-message{display:flex;align-items:flex-start;gap:10px;min-width:0;padding-top:14px;flex:1}
+.progress-connected-message>div{display:flex;flex-direction:column;gap:4px;min-width:0}
+.progress-connected-message b{font-size:13px}
+.progress-connected-message span:not(.progress-connected-dot){font-size:12px;line-height:1.5;color:var(--muted)}
+.progress-connected-dot{width:9px;height:9px;border-radius:50%;background:#58cc02;box-shadow:0 0 0 4px #58cc021c;flex:0 0 auto;margin-top:4px}
+.progress-connect-details>.btn{margin-top:13px}
+@media(max-width:760px){.progress-connect-summary{grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding:14px}.progress-connect-heading{grid-column:1/-1}.progress-connect-glance{text-align:left}.progress-connect-toggle{justify-self:end}.progress-connect-details{padding:0 14px 14px;align-items:flex-start;flex-wrap:wrap}.progress-connected-message{flex-basis:100%}.progress-connect-details>.btn{margin-top:0}.progress-connect-details .progress-connect-controls{max-width:none}.progress-connect-details .progress-connect-controls .btn{white-space:nowrap}}
