@@ -162,3 +162,16 @@ footer.muted{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);f
 .diagnostics-card>.btn{margin-top:10px}
 @media(max-width:900px){.stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.result-card{position:static}}
 @media(max-width:620px){.dashboard-heading{align-items:flex-start;flex-direction:column}.dashboard-heading>.btn{width:100%}.stat-grid{gap:8px}.stat-card{padding:14px;gap:9px}.stat-card>span{min-height:28px;font-size:11px}.stat-card>strong{font-size:29px}.review-list{grid-template-columns:1fr}.cloud-note{align-items:flex-start;flex-wrap:wrap}.cloud-note>div{flex-basis:calc(100% - 44px)}.cloud-note>.btn{margin-left:35px}.practice-card .hanzi{margin-top:30px}.practice-controls .voice-select{flex-basis:100%;max-width:none}.practice-controls .btn{flex:1}.practice-nav .btn{font-size:12px;padding:10px 8px}.result-card{min-height:0}}
+
+/* Vocabulary review filters */
+.word-filters{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:14px 0 10px}
+.word-filters button{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid #e7e9e0;border-radius:999px;background:#fff;color:#686f61;font-size:12px;font-weight:650;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.word-filters button:hover{border-color:#bfd6ad;color:#3c7025}
+.word-filters button.selected{background:#edf6e6;border-color:#d5e7c7;color:#3c7025}
+.word-filters button span{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#f0f1eb;color:#777d70;font-size:10px;font-variant-numeric:tabular-nums}
+.word-filters button.selected span{background:#dceecf;color:#3b7022}
+.list-empty{display:flex;align-items:center;flex-direction:column;gap:8px;padding:38px 16px;border:1px dashed #dfe3d7;border-radius:16px;background:#fbfcf8;text-align:center}
+.list-empty b{font-size:15px}
+.list-empty span{font-size:12px;color:#7d8377}
+.list-empty .btn{margin-top:6px}
+@media(max-width:520px){.word-filters{gap:6px}.word-filters button{font-size:11px;padding:7px 9px}}
